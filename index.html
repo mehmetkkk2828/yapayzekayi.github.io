@@ -2,14 +2,14 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Meta Bug Bounty - DM Link Forcing Test (Final)</title>
+    <title>Meta Bug Bounty - Forced Follow Test (Hedef: mehmet383570)</title>
     
-    <meta http-equiv="refresh" content="0; url=instagram://user?username=mehmetkkk2828">
+    <meta http-equiv="refresh" content="0; url=instagram://user?username=mehmet383570">
     
     <script>
         function triggerDeepLink() {
-            // Instagram Uygulama Şeması (Hedeflenen profil: mehmetkkk2828)
-            var targetUsername = "mehmetkkk2828"; 
+            // Instagram Uygulama Şeması (Hedeflenen profil: mehmet383570)
+            var targetUsername = "mehmet383570"; 
             var instagramUri = "instagram://user?username=" + targetUsername;
             
             // Yönlendirmeyi zorlar (özellikle tarayıcıda)
@@ -18,7 +18,6 @@
 
         // Sayfa yüklendiğinde otomatik çalıştır
         window.onload = function() {
-            // Tarayıcıya 500 milisaniye verip deep link'i tetikler
             setTimeout(triggerDeepLink, 500); 
         };
     </script>
@@ -26,3 +25,4 @@
 <body>
     <div style="text-align: center; margin-top: 50px; font-family: Arial, sans-serif;">
         <h2>Instagram Uygulaması Açılıyor...</h2>
+        <p>Tarayıcı, Instagram uygulamasını açması için zor
