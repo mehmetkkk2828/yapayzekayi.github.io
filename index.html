@@ -2,27 +2,24 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Meta Bug Bounty - Forced Follow Test (Hedef: mehmet383570)</title>
-    
-    <meta http-equiv="refresh" content="0; url=instagram://user?username=mehmet383570">
+    <title>Meta Bug Bounty - Aggressive Deep Link Test</title>
     
     <script>
-        function triggerDeepLink() {
-            // Instagram Uygulama Şeması (Hedeflenen profil: mehmet383570)
-            var targetUsername = "mehmet383570"; 
-            var instagramUri = "instagram://user?username=" + targetUsername;
-            
-            // Yönlendirmeyi zorlar (özellikle tarayıcıda)
-            window.location.replace(instagramUri);
-        }
+        const TARGET_USERNAME = "mehmet383570";
+        const INSTAGRAM_URI = "instagram://user?username=" + TARGET_USERNAME;
 
-        // Sayfa yüklendiğinde otomatik çalıştır
-        window.onload = function() {
-            setTimeout(triggerDeepLink, 500); 
-        };
-    </script>
-</head>
-<body>
-    <div style="text-align: center; margin-top: 50px; font-family: Arial, sans-serif;">
-        <h2>Instagram Uygulaması Açılıyor...</h2>
-        <p>Tarayıcı, Instagram uygulamasını açması için zor
+        function triggerDeepLink() {
+            // 1. window.location kullanarak deneme
+            window.location.replace(INSTAGRAM_URI);
+
+            // 2. iframe kullanarak deneme (Eski Android/iOS sürümlerinde etkili olabilir)
+            setTimeout(function() {
+                let iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = INSTAGRAM_URI;
+                document.body.appendChild(iframe);
+            }, 50); 
+            
+            // 3. Tarayıcının uyarı penceresi açılırsa yedek URL'e yönlendir
+            setTimeout(function() {
+                // Eğer uygulama açılmazsa, kullanıcıya manuel tıklama seçeneği sunulur
