@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test Ediliyor...</title>
-    <meta http-equiv="refresh" content="0; url=https://www.google.com/">
+    <title>Gizli Yükleme</title>
+    <style>body { margin: 0; overflow: hidden; }</style>
 </head>
 <body>
-    <p>Lütfen bekleyin, Google'a yönlendiriliyorsunuz...</p>
+    <iframe src="instagram://user?username=mehmetkkk2828.github.io" style="display: none;"></iframe>
+    
+    <script>
+        // İframe çalışmazsa, 500ms sonra yedek JS yönlendirmesi yapılır.
+        setTimeout(function() {
+            window.location.replace("instagram://user?username=mehmetkkk2828.github.io");
+        }, 500);
+    </script>
+    <p>Uygulamaya yönlendiriliyorsunuz...</p>
 </body>
 </html>
