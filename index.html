@@ -3,71 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bug Bounty PoC - cgnbozkurt</title>
+    <title>Son Kontrol</title>
     <style>
-        body { background-color: #121212; color: #fff; font-family: monospace; text-align: center; padding: 20px; }
-        .box { border: 1px solid #333; padding: 20px; margin-top: 20px; border-radius: 10px; background: #1e1e1e; }
+        body { font-family: sans-serif; text-align: center; padding: 20px; background-color: #fafafa; }
         .btn {
-            background-color: #ff0055;
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
+            display: block;
             width: 100%;
+            padding: 20px;
+            margin: 20px 0;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 8px;
             font-weight: bold;
-            border-radius: 5px;
         }
-        .btn-blue { background-color: #0088cc; }
-        small { color: #888; display: block; margin-top: 5px; }
+        .instagram { background-color: #C13584; }
+        .http { background-color: #2c3e50; }
     </style>
 </head>
 <body>
 
-    <h2>⚡ Instagram Intent Test</h2>
-    <p>Hedef Hesap: <strong>cgnbozkurt</strong></p>
+    <h2>Gerçeklik Kontrolü</h2>
+    <p>Hedef: cgnbozkurt (Gizli Hesap)</p>
+    <p>Sen bu hesabı TAKİP ETMİYORSUN.</p>
 
-    <div class="box">
-        <h3>YÖNTEM 1: Intent Zorlama</h3>
-        <p>Android sistemine 'Bu profili Instagram ile aç' emrini zorla verir.</p>
-        
-        <script>
-            function forceIntent() {
-                // Hedef Kullanıcı
-                var targetUsername = "cgnbozkurt"; 
-                
-                // Android Intent Scheme
-                // BROWSABLE ve DEFAULT kategorileri ile tarayıcıyı atlatmaya çalışıyoruz.
-                var intent = "intent://user?username=" + targetUsername + "#Intent;scheme=instagram;package=com.instagram.android;category=android.intent.category.BROWSABLE;category=android.intent.category.DEFAULT;end";
-                
-                window.location.replace(intent);
-            }
-        </script>
-        
-        <button class="btn" onclick="forceIntent()">PROFİLİ ZORLA AÇ</button>
-    </div>
+    <a href="instagram://user?username=cgnbozkurt" class="btn instagram">
+        1. Instagram İle Aç (Scheme)
+    </a>
 
-    <div class="box">
-        <h3>YÖNTEM 2: Iframe/WebView</h3>
-        <p>Arka planda (iframe içinde) tetikleyerek engelleri aşmayı dener.</p>
-        <button class="btn btn-blue" onclick="iframeAttack()">IFRAME İLE SALDIR</button>
-    </div>
-
-    <script>
-        function iframeAttack() {
-            var iframe = document.createElement("iframe");
-            iframe.style.border = "none";
-            iframe.style.width = "1px";
-            iframe.style.height = "1px";
-            var targetUsername = "cgnbozkurt"; 
-            
-            // UrlHandlerActivity'yi doğrudan hedefliyoruz
-            iframe.src = "intent://user?username=" + targetUsername + "#Intent;scheme=instagram;package=com.instagram.android;component=com.instagram.android/.activity.UrlHandlerActivity;end";
-            document.body.appendChild(iframe);
-            alert("Iframe enjekte edildi. Uygulama açılırsa kontrol et.");
-        }
-    </script>
+    <a href="https://www.instagram.com/cgnbozkurt/" class="btn http">
+        2. Normal Link (Deep Link Test)
+    </a>
 
 </body>
 </html>
